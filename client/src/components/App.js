@@ -4,16 +4,14 @@ import Header from './Header';
 import Landing from './Landing';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-console.log(actions)
-const Dashboard = () => <h2>Dashboard!!!!!!!</h2>;
-const SurveyNew = () => <h2>SurveyNew!!!!!!!</h2>;
+import Dashboard from './Dashboard';
+import SurveyNew from './surveys/SurveyNew';
 
 class App extends Component{
     constructor(props){
         super(props);
     }
     componentDidMount(){
-        console.log(this.props)
         this.props.fetchUser();
     }
     render(){
