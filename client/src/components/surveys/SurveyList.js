@@ -6,23 +6,33 @@ class SurveyList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            sorted: false
+            sorted: false,
+            surveys: ['why'],
+            test: this.props.spread
         }
     }
     componentDidMount(){
-        this.props.fetchSurveys();
+        // this.props.fetchSurveys();
+        // this.setState({
+        //     surveys: this.props.surveys
+        // })
+        console.log('PLS ', this.props.spread)
     }
     handleDelete = (id) => {
         this.props.deleteSurvey(id);
-        console.log('this.propssss ', this.props)
     }
-    // componentDidUpdate(prevProps, prevState){
-    //     if(prevProps.surveys.length !== this.props.surveys.length){
-    //         return true;
-    //     }
-    // }
+    handleSort = () => {
+
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState){
+        console.log('next props ', nextProps)
+        return {
+            surveys: nextProps.surveys
+        }
+    }
     renderSurveys = () => {
-        return this.props.surveys.reverse().map((survey) => {
+        return this.state.surveys.reverse().map((survey) => {
             return (
               <div key={Math.random()}className="card darken-3">
                 <div className="card-content">
@@ -45,7 +55,8 @@ class SurveyList extends Component {
         })
     }
     render() {
-        console.log(this.props)
+        console.log(this.state);
+
         return (
             <div>
                 <button className="btn blue">Sort By Title</button>
@@ -59,6 +70,6 @@ function mapStateToProps({surveys}){
         surveys
     }
 }
-export default connect(mapStateToProps, { fetchSurveys, deleteSurvey })(
+export default connect(null, { fetchSurveys, deleteSurvey })(
   SurveyList
 );

@@ -13,14 +13,20 @@ class App extends Component{
     }
     componentDidMount(){
         this.props.fetchUser();
+        this.props.fetchSurveys();
     }
     render(){
         return (
           <div className="container">
             <BrowserRouter>
-            <Header />
+              <Header />
               <Route exact path="/" component={Landing} />
-              <Route exact path="/survey" component={Dashboard} />
+              <Route
+                exact
+                path="/survey"
+                component={Dashboard}
+                render={(props) => <Dashboard {...props} surveys={this.props.surveys} />}
+              />
               <Route path="/survey/new" component={SurveyNew} />
               <Route path="/header" component={Header} />
             </BrowserRouter>
@@ -29,5 +35,11 @@ class App extends Component{
     }
 }
 
+function mapStateToProps({ surveys }) {
+  return {
+    surveys,
+  };
+}
 
-export default connect(null, actions)(App);
+
+export default connect(mapStateToProps, actions)(App);
