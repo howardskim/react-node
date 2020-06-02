@@ -9,6 +9,24 @@ const  Path  = require("path-parser");
 const { URL } = require('url');
 module.exports = (app) => {
 
+    app.delete('/api/survey/:surveyId', requireLogin, async (req, res) => {
+        try{
+            await Survey.deleteOne({
+              _id: req.params.surveyId,
+            });
+            const surveys = await Survey.find({ _user: req.user.id }).select({
+            recipients: false,
+            });
+            res.json({
+            surveys,
+            });
+        }catch(err){
+            res.json({
+                success: false
+            })
+        }
+    })
+
     app.get('/api/surveys', requireLogin, async (req, res) => {
         const surveys = await Survey.find({ _user: req.user.id})
         .select({recipients: false})
